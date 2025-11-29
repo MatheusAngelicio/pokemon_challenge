@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_challenge/core/theme/app_theme.dart';
+import 'package:pokemon_challenge/presenter/pages/pokemon_list/pokemon_list_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,10 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      title: 'Pokedex',
       debugShowCheckedModeBanner: false,
-      home: Center(child: Text('Testando')),
+      home: const PokemonListPage(),
+      theme: AppTheme.light,
     );
   }
 }
