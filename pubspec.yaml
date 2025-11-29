@@ -25,8 +25,8 @@ flutter:
 
   uses-material-design: true
 
-assets:
-    - assets/pokemon_logo.png
+  assets:
+    - assets/
 
 flutter_native_splash:
   image: assets/pokemon_logo.png
