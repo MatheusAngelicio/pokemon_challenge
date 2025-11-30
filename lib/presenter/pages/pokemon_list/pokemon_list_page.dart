@@ -6,6 +6,7 @@ import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_cub
 import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_state.dart';
 import 'package:pokemon_challenge/presenter/dialogs/pokemon_alert_dialog.dart';
 import 'package:pokemon_challenge/presenter/dialogs/pokemon_details_dialog.dart';
+import 'package:pokemon_challenge/presenter/pages/pokemon_list/pokemon_list_helper.dart';
 import 'package:pokemon_challenge/presenter/pages/pokemon_list/widgets/pokemon_list_header.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_card_item.dart';
 import 'package:pokemon_challenge/presenter/widgets/search_text_field.dart';
@@ -175,7 +176,13 @@ class __PokemonListViewState extends State<PokemonListPage> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return PokemonDetailsDialog(pokemon: pokemon);
+                                return PokemonDetailsDialog(
+                                  pokemon: pokemon,
+                                  relatedPokemons: getRelatedPokemons(
+                                    state.pokemonListEntity,
+                                    pokemon.number,
+                                  ),
+                                );
                               },
                             );
                           },
