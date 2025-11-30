@@ -6,6 +6,7 @@ import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_cub
 import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_state.dart';
 import 'package:pokemon_challenge/presenter/pages/pokemon_list/widgets/pokemon_list_header.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_alert_dialog.dart';
+import 'package:pokemon_challenge/presenter/widgets/pokemon_card_item.dart';
 import 'package:pokemon_challenge/presenter/widgets/search_text_field.dart';
 
 class PokemonListPage extends StatefulWidget {
@@ -16,13 +17,20 @@ class PokemonListPage extends StatefulWidget {
 }
 
 class __PokemonListViewState extends State<PokemonListPage> {
-  final TextEditingController _controller = TextEditingController();
+  late final TextEditingController _searchPokemonController;
   late final PokemonListCubit _contactChannelsCubit;
 
   @override
   void initState() {
     super.initState();
+    _searchPokemonController = TextEditingController();
     _contactChannelsCubit = context.read<PokemonListCubit>()..getPokemonList();
+  }
+
+  @override
+  void dispose() {
+    _searchPokemonController.dispose();
+    super.dispose();
   }
 
   @override
@@ -55,93 +63,124 @@ class __PokemonListViewState extends State<PokemonListPage> {
           }
 
           if (state is PokemonListLoadedState) {
-            return Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: PokemonListHeader(),
-                ),
-
-                Positioned(
-                  top: 80,
-                  left: 0,
-                  right: 0,
-                  child: Image.asset(
-                    'assets/koraidon.png',
-                    height: 400,
-                    fit: BoxFit.fill,
+            return CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 700,
+                    child: Stack(
+                      children: [
+                        PokemonListHeader(),
+                        Positioned(
+                          top: 80,
+                          left: 0,
+                          right: 0,
+                          child: Image.asset(
+                            'assets/koraidon.png',
+                            height: 400,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Positioned(
+                          top: 370,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            height: 120,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  AppColors.background.withValues(alpha: 0),
+                                  AppColors.background.withValues(alpha: 0.9),
+                                  AppColors.background,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 410,
+                          left: 20,
+                          right: 20,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Explore o incrível\nmundo dos Pokémon.",
+                                style: AppTextStyles.title,
+                              ),
+                              SizedBox(height: 12),
+                              Text(
+                                "Descubra informações detalhadas sobre seus personagens favoritos.",
+                                style: AppTextStyles.medium.copyWith(
+                                  color: AppColors.darkGray,
+                                ),
+                              ),
+                              SizedBox(height: 12),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                textBaseline: TextBaseline.alphabetic,
+                                children: [
+                                  Text(
+                                    "+1000k",
+                                    style: AppTextStyles.xxLarge.copyWith(
+                                      color: AppColors.primary,
+                                    ),
+                                  ),
+                                  SizedBox(width: 12),
+                                  Text(
+                                    "Pokemons",
+                                    style: AppTextStyles.medium.copyWith(
+                                      color: AppColors.primary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 12),
+                              SearchTextField(
+                                controller: _searchPokemonController,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-
-                Positioned(
-                  top: 370,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: 120,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          AppColors.background.withValues(alpha: 0),
-                          AppColors.background.withValues(alpha: 0.9),
-                          AppColors.background,
-                        ],
-                      ),
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          childAspectRatio: 0.75,
+                        ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final pokemon =
+                            state.pokemonListEntity.pokemonsEntity[index];
+                        return PokemonCardItem(
+                          imageUrl: pokemon.img,
+                          name: pokemon.name,
+                          number: pokemon.number,
+                        );
+                      },
+                      childCount: state.pokemonListEntity.pokemonsEntity.length,
                     ),
                   ),
                 ),
 
-                Positioned(
-                  top: 410,
-                  left: 20,
-                  right: 20,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Explore o incrível\nmundo dos Pokémon.",
-                        style: AppTextStyles.title,
-                      ),
-                      SizedBox(height: 12),
-                      Text(
-                        "Descubra informações detalhadas sobre seus personagens favoritos.",
-                        style: AppTextStyles.medium.copyWith(
-                          color: AppColors.darkGray,
-                        ),
-                      ),
-                      SizedBox(height: 12),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          Text(
-                            "+1000k",
-                            style: AppTextStyles.xxLarge.copyWith(
-                              color: AppColors.primary,
-                            ),
-                          ),
-                          SizedBox(width: 12),
-                          Text(
-                            "Pokemons",
-                            style: AppTextStyles.medium.copyWith(
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 12),
-                      SearchTextField(controller: _controller),
-                    ],
-                  ),
-                ),
+                SliverToBoxAdapter(child: SizedBox(height: 40)),
               ],
             );
           }
-
           return const SizedBox.shrink();
         },
       ),
