@@ -4,8 +4,9 @@ import 'package:pokemon_challenge/core/theme/app_colors.dart';
 import 'package:pokemon_challenge/core/theme/app_text_styles.dart';
 import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_cubit.dart';
 import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_state.dart';
+import 'package:pokemon_challenge/presenter/dialogs/pokemon_alert_dialog.dart';
+import 'package:pokemon_challenge/presenter/dialogs/pokemon_details_dialog.dart';
 import 'package:pokemon_challenge/presenter/pages/pokemon_list/widgets/pokemon_list_header.dart';
-import 'package:pokemon_challenge/presenter/widgets/pokemon_alert_dialog.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_card_item.dart';
 import 'package:pokemon_challenge/presenter/widgets/search_text_field.dart';
 
@@ -138,7 +139,7 @@ class __PokemonListViewState extends State<PokemonListPage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 12),
+                              SizedBox(height: 40),
                               SearchTextField(
                                 controller: _searchPokemonController,
                               ),
@@ -170,6 +171,14 @@ class __PokemonListViewState extends State<PokemonListPage> {
                           imageUrl: pokemon.img,
                           name: pokemon.name,
                           number: pokemon.number,
+                          onCardTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return PokemonDetailsDialog(pokemon: pokemon);
+                              },
+                            );
+                          },
                         );
                       },
                       childCount: state.pokemonListEntity.pokemonsEntity.length,
@@ -177,7 +186,7 @@ class __PokemonListViewState extends State<PokemonListPage> {
                   ),
                 ),
 
-                SliverToBoxAdapter(child: SizedBox(height: 40)),
+                SliverToBoxAdapter(child: SizedBox(height: 60)),
               ],
             );
           }
