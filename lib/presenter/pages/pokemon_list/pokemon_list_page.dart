@@ -174,6 +174,7 @@ class __PokemonListViewState extends State<PokemonListPage> {
                         name: pokemon.name,
                         number: pokemon.number,
                         onCardTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
                           showDialog(
                             context: context,
                             builder: (_) => PokemonDetailsDialog(
