@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_challenge/core/theme/app_colors.dart';
 import 'package:pokemon_challenge/core/theme/app_text_styles.dart';
 import 'package:pokemon_challenge/domain/entity/pokemon_data_entity.dart';
+import 'package:pokemon_challenge/presenter/widgets/pokemon_bordered_text.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_card_item.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_details_progress_bar.dart';
 import 'package:pokemon_challenge/utils/number_utils.dart';
@@ -38,7 +39,13 @@ class PokemonDetailsDialog extends StatelessWidget {
                         horizontal: 20,
                         vertical: 20,
                       ),
-                      decoration: BoxDecoration(color: AppColors.primary),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(24),
+                          bottomRight: Radius.circular(24),
+                        ),
+                      ),
                       child: Stack(
                         children: [
                           Positioned(
@@ -101,6 +108,19 @@ class PokemonDetailsDialog extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Center(
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 8,
+                          runSpacing: 4,
+                          children: pokemon.type
+                              .map((type) => PokemonBorderedText(text: type))
+                              .toList(),
+                        ),
+                      ),
+
+                      const SizedBox(height: 32),
+
                       Text('Estatísticas base', style: AppTextStyles.medium),
                       const SizedBox(height: 24),
 
