@@ -40,3 +40,29 @@ PokemonDataEntity makePokemon({
     prevEvolution: prevEvolution,
   );
 }
+
+final Map<String, dynamic> mockPokemonMap = {
+  "pokemon": [
+    {
+      "id": 1,
+      "num": "001",
+      "name": "Bulbasaur",
+      "img": "",
+      "type": ["Grass"],
+      "height": "0.7 m",
+      "weight": "6.9 kg",
+      "candy": "Bulbasaur Candy",
+      "candy_count": 25,
+      "egg": "2 km",
+      "spawn_chance": 0.69,
+      "avg_spawns": 69.0,
+      "spawn_time": "20:00",
+      "multipliers": [1.58],
+      "weaknesses": ["Fire", "Ice", "Flying", "Psychic"],
+      "next_evolution": [
+        {"num": "002", "name": "Ivysaur"},
+      ],
+      "prev_evolution": null,
+    },
+  ],
+};
