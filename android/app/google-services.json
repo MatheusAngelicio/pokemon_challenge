@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "933585346986",
+    "project_id": "pokemon-challenge-2e282",
+    "storage_bucket": "pokemon-challenge-2e282.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933585346986:android:b7a2e2d6a47e798e900bd3",
+        "android_client_info": {
+          "package_name": "com.example.pokemon_challenge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq70bHdb31WJhyhVoztqVBuzpGzFAZzns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
