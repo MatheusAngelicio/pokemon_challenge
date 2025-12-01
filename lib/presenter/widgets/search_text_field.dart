@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_challenge/core/theme/app_colors.dart';
 
 class SearchTextField extends StatelessWidget {
-  const SearchTextField({super.key, required TextEditingController controller})
-    : _controller = controller;
+  const SearchTextField({
+    super.key,
+    required TextEditingController controller,
+    this.onChanged,
+  }) : _controller = controller;
 
   final TextEditingController _controller;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class SearchTextField extends StatelessWidget {
           border: InputBorder.none,
           prefixIcon: const Icon(Icons.search, color: AppColors.darkGray),
         ),
-        onChanged: (value) {},
+        onChanged: onChanged,
       ),
     );
   }

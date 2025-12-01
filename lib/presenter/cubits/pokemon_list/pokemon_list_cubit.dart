@@ -14,8 +14,31 @@ final class PokemonListCubit extends Cubit<PokemonListState> {
 
     final result = await _pokemonListUsecase();
 
-    result.fold((failure) {
-      emit(PokemonListErrorState(message: failure.message));
-    }, (success) => emit(PokemonListLoadedState(pokemonListEntity: success)));
+    result.fold(
+      (failure) {
+        emit(PokemonListErrorState(message: failure.message));
+      },
+      (success) {
+        emit(
+          PokemonListLoadedState(
+            pokemonListEntity: success,
+            filteredList: success.pokemonsEntity,
+          ),
+        );
+      },
+    );
+  }
+
+  void filterPokemons(String query) {
+    if (state is! PokemonListLoadedState) return;
+
+    final loaded = state as PokemonListLoadedState;
+
+    final filtered = loaded.pokemonListEntity.pokemonsEntity.where((pokemon) {
+      return pokemon.name.toLowerCase().contains(query.toLowerCase()) ||
+          pokemon.number.contains(query);
+    }).toList();
+
+    emit(loaded.copyWith(filteredList: filtered));
   }
 }

@@ -20,13 +20,13 @@ class PokemonListPage extends StatefulWidget {
 
 class __PokemonListViewState extends State<PokemonListPage> {
   late final TextEditingController _searchPokemonController;
-  late final PokemonListCubit _contactChannelsCubit;
+  late final PokemonListCubit _pokemonListCubit;
 
   @override
   void initState() {
     super.initState();
     _searchPokemonController = TextEditingController();
-    _contactChannelsCubit = context.read<PokemonListCubit>()..getPokemonList();
+    _pokemonListCubit = context.read<PokemonListCubit>()..getPokemonList();
   }
 
   @override
@@ -51,7 +51,7 @@ class __PokemonListViewState extends State<PokemonListPage> {
                   buttonText: "Tentar novamente",
                   onPressed: () {
                     Navigator.pop(context);
-                    _contactChannelsCubit.getPokemonList();
+                    _pokemonListCubit.getPokemonList();
                   },
                 );
               },
@@ -143,6 +143,9 @@ class __PokemonListViewState extends State<PokemonListPage> {
                               SizedBox(height: 40),
                               SearchTextField(
                                 controller: _searchPokemonController,
+                                onChanged: (value) {
+                                  _pokemonListCubit.filterPokemons(value);
+                                },
                               ),
                             ],
                           ),
@@ -164,32 +167,26 @@ class __PokemonListViewState extends State<PokemonListPage> {
                           mainAxisSpacing: 16,
                           childAspectRatio: 0.75,
                         ),
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final pokemon =
-                            state.pokemonListEntity.pokemonsEntity[index];
-                        return PokemonCardItem(
-                          imageUrl: pokemon.img,
-                          name: pokemon.name,
-                          number: pokemon.number,
-                          onCardTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return PokemonDetailsDialog(
-                                  pokemon: pokemon,
-                                  relatedPokemons: getRelatedPokemons(
-                                    state.pokemonListEntity,
-                                    pokemon.number,
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                      childCount: state.pokemonListEntity.pokemonsEntity.length,
-                    ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final pokemon = state.filteredList[index];
+                      return PokemonCardItem(
+                        imageUrl: pokemon.img,
+                        name: pokemon.name,
+                        number: pokemon.number,
+                        onCardTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => PokemonDetailsDialog(
+                              pokemon: pokemon,
+                              relatedPokemons: getRelatedPokemons(
+                                state.pokemonListEntity,
+                                pokemon.number,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }, childCount: state.filteredList.length),
                   ),
                 ),
 
