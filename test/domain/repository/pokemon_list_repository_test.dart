@@ -46,7 +46,7 @@ void main() {
       final result = await repository();
 
       expect(result.isLeft(), true);
-      expect(result.fold((l) => l.message, (r) => null), 'Erro do servidor');
+      expect(result.fold((l) => l.message, (r) => null), 'Erro de servidor');
       verify(() => mockDatasource()).called(1);
     },
   );
