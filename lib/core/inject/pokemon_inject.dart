@@ -7,6 +7,7 @@ import 'package:pokemon_challenge/domain/repository/pokemon_list_repository.dart
 import 'package:pokemon_challenge/domain/usecase/pokemon_list_usecase.dart';
 import 'package:pokemon_challenge/domain/usecase/pokemon_list_usecase_impl.dart';
 import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_cubit.dart';
+import 'package:pokemon_challenge/presenter/cubits/pokemon_sort/pokemon_sort_cubit.dart';
 
 sealed class PokemonInject {
   static void inject(GetIt getIt) {
@@ -32,5 +33,7 @@ sealed class PokemonInject {
       () =>
           PokemonListCubit(pokemonListUsecase: getIt.get<PokemonListUsecase>()),
     );
+
+    getIt.registerFactory<PokemonSortCubit>(() => PokemonSortCubit());
   }
 }

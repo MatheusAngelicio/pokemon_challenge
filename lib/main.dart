@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pokemon_challenge/core/inject/pokemon_inject.dart';
 import 'package:pokemon_challenge/core/theme/app_theme.dart';
 import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_cubit.dart';
+import 'package:pokemon_challenge/presenter/cubits/pokemon_sort/pokemon_sort_cubit.dart';
 import 'package:pokemon_challenge/presenter/pages/pokemon_list/pokemon_list_page.dart';
 
 void main() {
@@ -26,8 +27,15 @@ class MyApp extends StatelessWidget {
       title: 'Pokedex',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: BlocProvider(
-        create: (_) => getIt<PokemonListCubit>(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<PokemonListCubit>(
+            create: (_) => getIt<PokemonListCubit>(),
+          ),
+          BlocProvider<PokemonSortCubit>(
+            create: (_) => getIt<PokemonSortCubit>(),
+          ),
+        ],
         child: const PokemonListPage(),
       ),
     );

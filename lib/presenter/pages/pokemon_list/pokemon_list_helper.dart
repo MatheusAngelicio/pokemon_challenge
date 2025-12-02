@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:pokemon_challenge/domain/entity/pokemon_data_entity.dart';
 import 'package:pokemon_challenge/domain/entity/pokemon_list_entity.dart';
+import 'package:pokemon_challenge/presenter/cubits/pokemon_sort/pokemon_sort_state.dart';
 
 List<PokemonDataEntity> getRelatedPokemons(
   PokemonListEntity pokemonListEntity,
@@ -36,4 +37,22 @@ List<PokemonDataEntity> getRelatedPokemons(
   }
 
   return result;
+}
+
+List<PokemonDataEntity> sortAndFilterPokemons({
+  required List<PokemonDataEntity> pokemons,
+  required String searchQuery,
+  required PokemonSortState sortState,
+}) {
+  final filteredList = pokemons
+      .where((p) => p.name.toLowerCase().contains(searchQuery.toLowerCase()))
+      .toList();
+
+  if (sortState.isAlphabeticalSelected) {
+    filteredList.sort((a, b) => a.name.compareTo(b.name));
+  } else if (sortState.isCodeSelected) {
+    filteredList.sort((a, b) => a.number.compareTo(b.number));
+  }
+
+  return filteredList;
 }
