@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_challenge/analytics/analytics_channel.dart';
+import 'package:pokemon_challenge/analytics/battery_channel.dart';
 import 'package:pokemon_challenge/core/theme/app_colors.dart';
 import 'package:pokemon_challenge/core/theme/app_text_styles.dart';
 import 'package:pokemon_challenge/domain/entity/pokemon_data_entity.dart';
@@ -155,7 +157,14 @@ class PokemonDetailsDialog extends StatelessWidget {
                                 imageUrl: related.img,
                                 name: related.name,
                                 number: related.number,
-                                onCardTap: () {},
+                                onCardTap: () async {
+                                  int batteryLevel =
+                                      await BatteryChannel.getBatteryLevel();
+                                  await AnalyticsChannel.logEvent(
+                                    'battery_check',
+                                    {'level': batteryLevel.toString()},
+                                  );
+                                },
                               ),
                             );
                           },
