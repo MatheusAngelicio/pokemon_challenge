@@ -38,6 +38,19 @@ class PokemonCardItem extends StatelessWidget {
                   child: Image.network(
                     imageUrl,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: double.infinity,
+                        height: 150,
+                        alignment: Alignment.center,
+                        color: AppColors.white,
+                        child: const Icon(
+                          Icons.error_outline,
+                          size: 40,
+                          color: AppColors.darkGray,
+                        ),
+                      );
+                    },
                     frameBuilder:
                         (context, child, frame, wasSynchronouslyLoaded) {
                           if (wasSynchronouslyLoaded) {

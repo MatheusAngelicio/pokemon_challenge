@@ -7,6 +7,7 @@ import 'package:pokemon_challenge/domain/entity/pokemon_data_entity.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_bordered_text.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_card_item.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_details_progress_bar.dart';
+import 'package:pokemon_challenge/presenter/widgets/pokemon_placeholder.dart';
 import 'package:pokemon_challenge/utils/number_utils.dart';
 
 class PokemonDetailsDialog extends StatelessWidget {
@@ -96,7 +97,32 @@ class PokemonDetailsDialog extends StatelessWidget {
                       right: 0,
                       child: SizedBox(
                         height: 250,
-                        child: Image.network(pokemon.img, fit: BoxFit.contain),
+                        child: Image.network(
+                          pokemon.img,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/pokemon_not_found.png',
+                              fit: BoxFit.contain,
+                            );
+                          },
+                          frameBuilder:
+                              (context, child, frame, wasSynchronouslyLoaded) {
+                                if (wasSynchronouslyLoaded) {
+                                  return child;
+                                }
+                                if (frame == null) {
+                                  return Container(
+                                    width: double.infinity,
+                                    height: 150,
+                                    alignment: Alignment.center,
+                                    color: AppColors.white,
+                                    child: const PokemonPlaceholder(),
+                                  );
+                                }
+                                return child;
+                              },
+                        ),
                       ),
                     ),
                   ],
