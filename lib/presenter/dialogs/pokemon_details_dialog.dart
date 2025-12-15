@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_challenge/analytics/analytics_channel.dart';
-import 'package:pokemon_challenge/analytics/battery_channel.dart';
+import 'package:pokemon_challenge/core/analytics/analytics_channel.dart';
+import 'package:pokemon_challenge/core/analytics/battery_channel.dart';
 import 'package:pokemon_challenge/core/theme/app_colors.dart';
 import 'package:pokemon_challenge/core/theme/app_text_styles.dart';
 import 'package:pokemon_challenge/domain/entity/pokemon_data_entity.dart';
@@ -8,7 +8,7 @@ import 'package:pokemon_challenge/presenter/widgets/pokemon_bordered_text.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_card_item.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_details_progress_bar.dart';
 import 'package:pokemon_challenge/presenter/widgets/pokemon_placeholder.dart';
-import 'package:pokemon_challenge/utils/number_utils.dart';
+import 'package:pokemon_challenge/core/utils/number_utils.dart';
 
 class PokemonDetailsDialog extends StatelessWidget {
   final PokemonDataEntity pokemon;

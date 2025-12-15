@@ -15,6 +15,15 @@ Pokemon Challenge é um aplicativo Flutter que permite listar Pokémons a partir
 - Visualização de detalhes do Pokémon em um modal.
 - Exibição de Pokémons relacionados.
 
+## Arquitetura
+*** O projeto segue uma abordagem inspirada em Clean Architecture, dividida em camadas: ***
+
+lib/
+├── core/ # Utilitários, erros, injeção de dependência, analytics
+├── data/ # Implementações concretas (datasources, models)
+├── domain/ # Regras de negócio (entities, usecases, repositories)
+└── presenter/# UI + gerenciamento de estado (pages, dialogs, widgets, blocs)
+
 ## Dependências
 
 - **flutter**: SDK principal.
