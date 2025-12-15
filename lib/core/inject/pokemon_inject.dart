@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pokemon_challenge/core/network/dio_logging_interceptor.dart';
 import 'package:pokemon_challenge/data/datasource/pokemon_list/pokemon_list_datasource.dart';
 import 'package:pokemon_challenge/data/datasource/pokemon_list/pokemon_list_datasource_impl.dart';
 import 'package:pokemon_challenge/data/repository/pokemon_list/pokemon_list_repository_impl.dart';
@@ -11,7 +13,12 @@ import 'package:pokemon_challenge/presenter/cubits/pokemon_sort/pokemon_sort_cub
 
 sealed class PokemonInject {
   static void inject(GetIt getIt) {
-    getIt.registerLazySingleton<Dio>(() => Dio());
+    final dio = Dio();
+
+    if (kDebugMode) {
+      dio.interceptors.add(DioLoggingInterceptor());
+    }
+    getIt.registerSingleton<Dio>(dio);
 
     getIt.registerFactory<PokemonListDatasource>(
       () => PokemonListDatasourceImpl(dio: getIt.get<Dio>()),
