@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:pokemon_challenge/core/erros/failure.dart';
+import 'package:pokemon_challenge/core/errors/pokemon_failure.dart';
 import 'package:pokemon_challenge/domain/entity/pokemon_list_entity.dart';
 import 'package:pokemon_challenge/domain/repository/pokemon_list_repository.dart';
 import 'package:pokemon_challenge/domain/usecase/pokemon_list_usecase.dart';
@@ -33,7 +33,7 @@ void main() {
   );
 
   test('should return Failure when repository returns failure', () async {
-    final mockFailure = Failure("Erro inesperado");
+    final mockFailure = PokemonFailure("Erro inesperado");
     when(() => mockRepository()).thenAnswer((_) async => Left(mockFailure));
 
     final result = await usecase();

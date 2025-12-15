@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_challenge/core/constants/pokemon_strings.dart';
 import 'package:pokemon_challenge/core/theme/app_colors.dart';
 import 'package:pokemon_challenge/core/theme/app_text_styles.dart';
 import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_cubit.dart';
@@ -50,9 +51,9 @@ class __PokemonListViewState extends State<PokemonListPage> {
               context: context,
               barrierDismissible: false,
               builder: (_) => PokemonAlertDialog(
-                title: "Oops! Algo deu errado.",
+                title: PokemonStrings.errorTitle,
                 subtitle: state.message,
-                buttonText: "Tentar novamente",
+                buttonText: PokemonStrings.retryButtonText,
                 onPressed: () {
                   Navigator.pop(context);
                   _pokemonListCubit.getPokemonList();

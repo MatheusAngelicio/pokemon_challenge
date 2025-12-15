@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:pokemon_challenge/core/erros/failure.dart';
+import 'package:pokemon_challenge/core/errors/pokemon_failure.dart';
 import 'package:pokemon_challenge/domain/usecase/pokemon_list_usecase.dart';
 import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_cubit.dart';
 import 'package:pokemon_challenge/presenter/cubits/pokemon_list/pokemon_list_state.dart';
@@ -49,7 +49,7 @@ void main() {
       build: () {
         when(
           () => mockUsecase(),
-        ).thenAnswer((_) async => Left(Failure('Erro inesperado')));
+        ).thenAnswer((_) async => Left(PokemonFailure('Erro inesperado')));
 
         return cubit;
       },
